@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Car Quotation – Nexa Vaishali Nagar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+<!-- ═══════════════ FORM PAGE ═══════════════ -->
+<div id="formPage" class="page">
+  <div class="form-card">
+
+    <div class="brand-header">
+      <div class="brand-logo">N</div>
+      <div>
+        <h1>Nexa</h1>
+        <p class="brand-sub">Vaishali Nagar, Ajmer</p>
+      </div>
+    </div>
+
+    <h2 class="section-title">New Car Quotation</h2>
+
+    <!-- Customer Section -->
+    <div class="section-block">
+      <div class="section-label">
+        <span class="section-icon">👤</span> Customer Details
+      </div>
+      <div class="field-group">
+        <div class="field">
+          <label>Customer Name <span class="req">*</span></label>
+          <input type="text" id="customerName" placeholder="e.g. Rajesh Sharma" autocomplete="off">
+        </div>
+        <div class="field">
+          <label>Phone Number <span class="req">*</span></label>
+          <input type="tel" id="customerPhone" placeholder="e.g. 98765 43210" maxlength="15">
+        </div>
+      </div>
+    </div>
+
+    <!-- Vehicle Section -->
+    <div class="section-block">
+      <div class="section-label">
+        <span class="section-icon">🚗</span> Vehicle Details
+      </div>
+      <div class="field-group">
+        <div class="field">
+          <label>Vehicle Model <span class="req">*</span></label>
+          <input type="text" id="vehicle" placeholder="e.g. Maruti Baleno" autocomplete="off">
+        </div>
+        <div class="field">
+          <label>Variant</label>
+          <select id="variant">
+            <option value="">Select Variant</option>
+            <option>Alpha</option>
+            <option>Sigma</option>
+            <option>Delta</option>
+            <option>Delta+</option>
+            <option>Zeta</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Fuel Type</label>
+          <select id="fuel">
+            <option value="">Select Fuel Type</option>
+            <option>Petrol</option>
+            <option>Diesel</option>
+            <option>CNG</option>
+            <option>Electric</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Colour</label>
+          <input type="text" id="colour" placeholder="e.g. Pearl White" autocomplete="off">
+        </div>
+      </div>
+    </div>
+
+    <!-- Price Section -->
+    <div class="section-block">
+      <div class="section-label">
+        <span class="section-icon">💰</span> Price Breakdown
+      </div>
+      <div class="price-grid">
+        <div class="price-row">
+          <label>Ex-Showroom Price</label>
+          <div class="rupee-input"><span>₹</span><input type="number" class="amt" id="amt0" placeholder="0" min="0"></div>
+        </div>
+        <div class="price-row">
+          <label>RTO Charges</label>
+          <div class="rupee-input"><span>₹</span><input type="number" class="amt" id="amt1" placeholder="0" min="0"></div>
+        </div>
+        <div class="price-row">
+          <label>Insurance</label>
+          <div class="rupee-input"><span>₹</span><input type="number" class="amt" id="amt2" placeholder="0" min="0"></div>
+        </div>
+        <div class="price-row">
+          <label>Accessories</label>
+          <div class="rupee-input"><span>₹</span><input type="number" class="amt" id="amt3" placeholder="0" min="0"></div>
+        </div>
+        <div class="price-row">
+          <label>Extended Warranty</label>
+          <div class="rupee-input"><span>₹</span><input type="number" class="amt" id="amt4" placeholder="0" min="0"></div>
+        </div>
+        <div class="price-row">
+          <label>TCS</label>
+          <div class="rupee-input"><span>₹</span><input type="number" class="amt" id="amt5" placeholder="0" min="0"></div>
+        </div>
+      </div>
+
+      <div class="total-bar">
+        <div class="total-row">
+          <span>Sub Total</span>
+          <span id="total">₹ 0</span>
+        </div>
+        <div class="discount-row">
+          <label>Customer Discount</label>
+          <div class="rupee-input small"><span>₹</span><input type="number" id="offer" placeholder="0" min="0"></div>
+        </div>
+        <div class="grand-row">
+          <span>Grand Total</span>
+          <span id="grand">₹ 0</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="formError" class="error-msg" style="display:none;"></div>
+
+    <button class="btn-primary" onclick="lockAndPreview()">
+      <span>Generate Quotation</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- ═══════════════ PREVIEW PAGE ═══════════════ -->
+<div id="previewPage" style="display:none;" class="page">
+
+  <div class="preview-actions">
+    <button class="btn-back" onclick="goBack()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back & Edit
+    </button>
+    <div class="action-btns">
+      <button class="btn-whatsapp" onclick="sendWhatsApp()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.5 2C6.253 2 2 6.253 2 11.5c0 1.795.487 3.467 1.322 4.9L2 22l5.703-1.302A9.456 9.456 0 0011.5 21C16.747 21 21 16.747 21 11.5S16.747 2 11.5 2zm0 17.25a7.75 7.75 0 110-15.5 7.75 7.75 0 010 15.5z"/></svg>
+        WhatsApp
+      </button>
+      <button class="btn-pdf" onclick="downloadPDF()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        Download PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- INVOICE (PDF-ready) -->
+  <div id="invoice" class="invoice">
+    <div class="inv-header">
+      <div class="inv-logo-wrap">
+        <div class="inv-logo">N</div>
+        <div>
+          <div class="inv-brand">NEXA</div>
+          <div class="inv-sub">Vaishali Nagar, Ajmer</div>
+        </div>
+      </div>
+      <div class="inv-meta">
+        <div class="inv-title">CAR QUOTATION</div>
+        <div class="inv-date">Date: <span id="date"></span></div>
+        <div class="inv-num">Ref: <span id="refNum"></span></div>
+      </div>
+    </div>
+
+    <div class="inv-customer">
+      <div class="inv-cust-item">
+        <span class="inv-cust-label">Customer Name</span>
+        <span class="inv-cust-val" id="pName"></span>
+      </div>
+      <div class="inv-cust-item">
+        <span class="inv-cust-label">Phone</span>
+        <span class="inv-cust-val" id="pPhone"></span>
+      </div>
+    </div>
+
+    <div class="inv-vehicle">
+      <div class="inv-veh-item"><span>Model</span><strong id="pVehicle"></strong></div>
+      <div class="inv-veh-item"><span>Variant</span><strong id="pVariant"></strong></div>
+      <div class="inv-veh-item"><span>Fuel</span><strong id="pFuel"></strong></div>
+      <div class="inv-veh-item"><span>Colour</span><strong id="pColour"></strong></div>
+    </div>
+
+    <table class="inv-table">
+      <thead>
+        <tr><th>Description</th><th>Amount</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Ex-Showroom Price</td><td id="p0"></td></tr>
+        <tr><td>RTO Charges</td><td id="p1"></td></tr>
+        <tr><td>Insurance</td><td id="p2"></td></tr>
+        <tr><td>Accessories</td><td id="p3"></td></tr>
+        <tr><td>Extended Warranty</td><td id="p4"></td></tr>
+        <tr><td>TCS</td><td id="p5"></td></tr>
+      </tbody>
+      <tfoot>
+        <tr class="sub-total"><td>Sub Total</td><td id="pTotal"></td></tr>
+        <tr class="discount"><td>Customer Discount</td><td id="pOffer" class="discount-val"></td></tr>
+        <tr class="grand-total"><td>Grand Total</td><td id="pGrand"></td></tr>
+      </tfoot>
+    </table>
+
+    <div class="inv-footer">
+      <div class="inv-rm">
+        <div class="inv-rm-title">Relationship Manager</div>
+        <div class="inv-rm-name">Anurag Mathur</div>
+        <div class="inv-rm-contact">📞 9929570035 &nbsp;|&nbsp; 9414146940</div>
+      </div>
+      <div class="inv-note">
+        <p>This is a computer-generated quotation. Prices are subject to change.</p>
+        <p>Valid for 7 days from date of issue.</p>
+      </div>
+    </div>
+
+    <div class="inv-watermark">NEXA</div>
+  </div>
+
+  <p class="dev-credit">Developed by Rishit – Webnest Corporations</p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
